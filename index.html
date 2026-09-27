@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>MSJ Ordens de Serviço</title>
+<meta name="theme-color" content="#1E2B55">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="MSJ OS">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="top">
+  <button class="ibtn" id="backBtn" data-act="back" aria-label="Voltar" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+  <img class="logo" id="topLogo" alt="MSJ Serviços de Manutenção" src="icons/logo.png">
+  <h1 id="title">Ordens de serviço</h1>
+  <span class="save" id="saveState" aria-live="polite"></span>
+  <button class="ibtn" id="cfgBtn" data-act="config" aria-label="Ajustes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1.1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1.1 1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"/></svg></button>
+</header>
+
+<main id="app"><p class="empty">Carregando ordens…</p></main>
+
+<div class="actionbar" id="actionbar" hidden>
+  <button class="btn primary" data-act="pdf-rel">Relatório PDF</button>
+  <button class="btn signal" data-act="pdf-orc">Orçamento PDF</button>
+</div>
+
+<input type="file" id="camInput" accept="image/*" capture="environment" hidden>
+<input type="file" id="galInput" accept="image/*" multiple hidden>
+<input type="file" id="backupInput" accept="application/json,.json" hidden>
+<datalist id="legendas">
+  <option value="Plaqueta de Identificação"></option><option value="Equipamento"></option><option value="Horímetro"></option>
+  <option value="Defeito encontrado"></option><option value="Antes do reparo"></option><option value="Depois do reparo"></option><option value="Chicote elétrico"></option>
+</datalist>
+
+<div class="sheet" id="sigSheet" hidden>
+  <div class="sheet-card" role="dialog" aria-modal="true" aria-labelledby="sigTitle">
+    <h3 id="sigTitle">Assinatura do cliente</h3>
+    <canvas id="sigCanvas"></canvas>
+    <div class="fld"><label for="sigNome">Nome de quem assina</label><input id="sigNome" type="text" autocomplete="off"></div>
+    <div class="row-btns">
+      <button class="btn" data-act="sig-clear">Limpar</button>
+      <button class="btn" data-act="sig-cancel">Cancelar</button>
+      <button class="btn primary" data-act="sig-save" style="flex:1">Salvar assinatura</button>
+    </div>
+  </div>
+</div>
+
+<div class="sheet" id="fileSheet" hidden>
+  <div class="sheet-card" role="dialog" aria-modal="true" aria-labelledby="fileTitle">
+    <h3 id="fileTitle">PDF pronto</h3>
+    <p class="hint" id="fileName"></p>
+    <div class="row-btns col">
+      <button class="btn primary" data-act="file-share" id="fileShareBtn">Enviar (WhatsApp, e-mail…)</button>
+      <button class="btn" data-act="file-save">Salvar no celular</button>
+      <button class="btn" data-act="file-close">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" hidden></div>
+
+<script src="vendor/jspdf.umd.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
